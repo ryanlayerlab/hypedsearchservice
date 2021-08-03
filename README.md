@@ -1,0 +1,2 @@
+# hypedsearchservice
+API for Hypedsearch
