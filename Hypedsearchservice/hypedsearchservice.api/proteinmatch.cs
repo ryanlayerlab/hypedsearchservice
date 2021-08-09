@@ -72,7 +72,7 @@ namespace hypedsearchservice
         internal static List<ProteinMatch> GetProteinMatchesViaDatabase(string ionCharge, double weight, ExecutionContext context)
         {
             var proteinMatches = new List<ProteinMatch>();
-            var connectionString = "Server=tcp:layerlab.database.windows.net,1433;Initial Catalog=hypedsearch;Persist Security Info=False;User ID=ryan;Password=LayerlabPa$$word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=0;";
+            var connectionString = "xxx";
             var connection = new SqlConnection(connectionString);
             var commandText = "Select [ProteinName], [KMerLength], [Weight], [StartIndex],[EndIndex] from ProteinMatch where IonCharge = '" + ionCharge + "' and weight = " + weight.ToString();
             var command = new SqlCommand(commandText, connection);
