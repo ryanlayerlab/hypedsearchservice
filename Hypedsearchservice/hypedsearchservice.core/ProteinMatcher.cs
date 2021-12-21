@@ -58,10 +58,11 @@ namespace hypedsearchservice.core
             }
 
             var proteinMatches = new List<ProteinMatch>();
-            var connectionString = "Server=tcp:layerlab.database.windows.net,1433;Initial Catalog=hypedsearch;Persist Security Info=False;User ID=ryan;Password=LayerlabPa$$word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=0;";
+            var connectionString = "Server=tcp:layerlab.database.windows.net,1433;Initial Catalog=hypedsearch;Persist Security Info=False;User ID=ryan;Password=LayerlabPa$$word;MultipleActiveResultSets=False;TrustServerCertificate=False;Connection Timeout=0;";
             var connection = new SqlConnection(connectionString);
             var commandText = stringBuilder.ToString().Substring(6);
             var command = new SqlCommand(commandText, connection);
+            command.CommandTimeout = 0;
             connection.Open();
             var reader = command.ExecuteReader();
             while (reader.Read())
