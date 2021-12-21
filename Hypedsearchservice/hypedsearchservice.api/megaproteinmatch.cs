@@ -14,7 +14,7 @@ namespace hypedsearchservice
     public static class megaproteinmatch
     {
         [FunctionName("megaproteinmatch")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req, ExecutionContext context)
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequest req, ExecutionContext context)
         {
             try
             {
