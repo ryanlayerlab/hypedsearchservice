@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.810.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hypedsearchservice.api", "hypedsearchservice.api\hypedsearchservice.api.csproj", "{3AC8AA7D-09D3-404D-8D24-126CDA764CB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hypedsearchservice.core", "hypedsearchservice.core\hypedsearchservice.core.csproj", "{4D2F8438-EB51-48DA-9E2F-8077D1E37CE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hypedsearchservice.console", "hypedsearchservice.console\hypedsearchservice.console.csproj", "{5D535E4B-A051-40C4-A086-379CFA7DA48E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{3AC8AA7D-09D3-404D-8D24-126CDA764CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AC8AA7D-09D3-404D-8D24-126CDA764CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AC8AA7D-09D3-404D-8D24-126CDA764CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D2F8438-EB51-48DA-9E2F-8077D1E37CE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D2F8438-EB51-48DA-9E2F-8077D1E37CE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D2F8438-EB51-48DA-9E2F-8077D1E37CE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D2F8438-EB51-48DA-9E2F-8077D1E37CE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D535E4B-A051-40C4-A086-379CFA7DA48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D535E4B-A051-40C4-A086-379CFA7DA48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D535E4B-A051-40C4-A086-379CFA7DA48E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D535E4B-A051-40C4-A086-379CFA7DA48E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
