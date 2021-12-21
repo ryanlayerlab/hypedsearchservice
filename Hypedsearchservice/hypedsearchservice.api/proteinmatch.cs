@@ -14,25 +14,6 @@ using System.Text;
  
 namespace hypedsearchservice
 {
-    public class IonCharge
-    {
-        public string Case { get; set; }
-    }
-
-    public class ProteinMatch
-    {
-        public string ProteinName { get; set; }
-        public double Weight { get; set; }
-        public int StartIndex { get; set; }
-        public int EndIndex { get; set; }
-    }
-
-    public class Root
-    {
-        public IonCharge IonCharge { get; set; }
-        public double Weight { get; set; }
-        public List<ProteinMatch> ProteinMatchs { get; set; }
-    }
 
     public static class proteinmatch
     {
@@ -54,19 +35,6 @@ namespace hypedsearchservice
                 return new ObjectResult(e.ToString());
             }
 
-        }
-
-        internal static List<ProteinMatch> GetProteinMatchesViaFileSystem(string ionCharge, double weight, double ppm_tolerance, ExecutionContext context)
-        {
-            var fileName = "all_weight_protein_matches_" + ionCharge.ToString() + ".json";
-            var assemblyPath = context.FunctionDirectory;
-            var rootPath = assemblyPath.Substring(0, assemblyPath.LastIndexOf('\\')).TrimEnd();
-            var directoryPath = System.IO.Path.Combine(rootPath, "data");
-            var filePath = System.IO.Path.Combine(directoryPath, fileName);
-            var json = File.ReadAllText(filePath);
-            var contents = JsonConvert.DeserializeObject<Root[]>(json);
-            var filteredContents = contents[0].ProteinMatchs.FindAll(x => x.Weight == weight);
-            return filteredContents;
         }
 
         internal static List<ProteinMatch> GetProteinMatchesViaDatabase(string ionCharge, double weight, double ppm_tolerance, ExecutionContext context)
