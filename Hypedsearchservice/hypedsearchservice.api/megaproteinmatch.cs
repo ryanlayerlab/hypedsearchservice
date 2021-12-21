@@ -7,29 +7,69 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Text;
+
 
 namespace hypedsearchservice
 {
+
+
     public static class megaproteinmatch
     {
         [FunctionName("megaproteinmatch")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req, ExecutionContext context)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            try
+            {
+                var content = await new StreamReader(req.Body).ReadToEndAsync();
+                List<float> floats = JsonConvert.DeserializeObject<List<float>>(content);
 
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
-            return new OkObjectResult(responseMessage);
+                var ion_charge = req.Query["ion_charge"];
+                var weight = Double.Parse(req.Query["weight"]);
+                var ppm_tolerance = Double.Parse(req.Query["ppm_tolerance"]);
+                var proteinMatches = GetProteinMatchesViaDatabase(ion_charge, weight, ppm_tolerance, context);
+                var serializeProteinMatches = JsonConvert.SerializeObject(proteinMatches);
+                return new OkObjectResult(serializeProteinMatches);
+            }
+            catch (Exception e)
+            {
+                return new ObjectResult(e.ToString());
+            }
         }
+
+        internal static List<ProteinMatch> GetProteinMatchesViaDatabase(string ionCharge, double weight, double ppm_tolerance, ExecutionContext context)
+        {
+            var lowerBound = weight - (weight * ppm_tolerance);
+            var upperBound = weight + (weight * ppm_tolerance);
+            var proteinMatches = new List<ProteinMatch>();
+            var connectionString = "Server=tcp:layerlab.database.windows.net,1433;Initial Catalog=hypedsearch;Persist Security Info=False;User ID=ryan;Password=LayerlabPa$$word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=0;";
+            var connection = new SqlConnection(connectionString);
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("Select[ProteinName],[Weight],[StartIndex],[EndIndex] ");
+            stringBuilder.Append("from ProteinMatch where IonCharge = '");
+            stringBuilder.Append(ionCharge);
+            stringBuilder.Append("' and weight < ");
+            stringBuilder.Append(upperBound);
+            stringBuilder.Append(" and weight > ");
+            stringBuilder.Append(lowerBound);
+            var commandText = stringBuilder.ToString();
+            var command = new SqlCommand(commandText, connection);
+            connection.Open();
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var proteinMatch = new ProteinMatch();
+                proteinMatch.ProteinName = reader[0].ToString();
+                proteinMatch.Weight = Double.Parse(reader[1].ToString());
+                proteinMatch.StartIndex = Int32.Parse(reader[2].ToString());
+                proteinMatch.EndIndex = Int32.Parse(reader[3].ToString());
+                proteinMatches.Add(proteinMatch);
+            }
+            return proteinMatches;
+        }
+
     }
 }

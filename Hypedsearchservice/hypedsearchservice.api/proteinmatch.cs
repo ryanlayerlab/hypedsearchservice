@@ -14,7 +14,6 @@ using System.Text;
  
 namespace hypedsearchservice
 {
-
     public class IonCharge
     {
         public string Case { get; set; }
