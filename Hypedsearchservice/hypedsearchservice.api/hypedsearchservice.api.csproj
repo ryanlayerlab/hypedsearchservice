@@ -12,8 +12,6 @@
     <None Remove="obj\Release\netcoreapp3.1\PubTmp\Out\proteinmatch\function.json" />
     <None Remove="obj\Release\netcoreapp3.1\PubTmp\Out\bin\extensions.json" />
     <None Remove="data\" />
-    <None Remove="data\all_weight_protein_matches_Y.json" />
-    <None Remove="data\all_weight_protein_matches_B.json" />
     <None Remove="System.Data.SqlClient" />
   </ItemGroup>
   <ItemGroup>
@@ -27,13 +25,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="data\all_weight_protein_matches_Y.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="data\all_weight_protein_matches_B.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 </Project>
