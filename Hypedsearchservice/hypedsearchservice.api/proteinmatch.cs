@@ -45,7 +45,7 @@ namespace hypedsearchservice
             var connectionString = "Server=tcp:layerlab.database.windows.net,1433;Initial Catalog=hypedsearch;Persist Security Info=False;User ID=ryan;Password=LayerlabPa$$word;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=0;";
             var connection = new SqlConnection(connectionString);
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append("Select[ProteinName],[Weight],[StartIndex],[EndIndex] ");
+            stringBuilder.Append("Select [ProteinName],[Weight],[KMerLength],[StartIndex],[EndIndex],[KMers] ");
             stringBuilder.Append("from ProteinMatch where IonCharge = '");
             stringBuilder.Append(ionCharge);
             stringBuilder.Append("' and weight < ");
@@ -61,9 +61,10 @@ namespace hypedsearchservice
                 var proteinMatch = new ProteinMatch();
                 proteinMatch.ProteinName = reader[0].ToString();
                 proteinMatch.Weight = Double.Parse(reader[1].ToString());
-                proteinMatch.StartIndex = Int32.Parse(reader[2].ToString());
-                proteinMatch.EndIndex = Int32.Parse(reader[3].ToString());
-                proteinMatches.Add(proteinMatch);
+                proteinMatch.KMerLength = Int32.Parse(reader[2].ToString());
+                proteinMatch.StartIndex = Int32.Parse(reader[3].ToString());
+                proteinMatch.EndIndex = Int32.Parse(reader[4].ToString());
+                proteinMatch.KMers = reader[5].ToString();
             }
             return proteinMatches;
         }
